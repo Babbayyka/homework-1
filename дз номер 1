@@ -1,0 +1,40 @@
+int main() {
+	double num = 0;
+    double num1 = 0;
+    char num2 = ' ';
+    
+    cout << "Введите число" << endl;
+
+    cin >> num >> num2 >> num1;
+    while ((true))
+    {
+        switch (num2)
+        {
+        case '+':
+            cout << "Ответ: " << num + num1;
+            break;
+
+        case '-':
+            cout << "Ответ: " << num - num1;
+            break;
+
+        case '/':
+            cout << "Ответ: " << num / num1;
+            break;
+
+        case '*':
+            cout << "Ответ: " << num * num1;
+            break;
+
+        case '^':
+            cout << "Ответ: " << pow(num, num1);
+            break;
+
+        default:
+            cout << "Erorr" << endl;
+        }
+        cout << endl;
+        system("pause");
+}
+return 0;
+}
