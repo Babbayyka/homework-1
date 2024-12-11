@@ -1,23 +1,63 @@
-planets = {
-    "Mercury": 2439.7,
-    "Venus": 6051.8,
-    "Earth": 6371.0,
-    "Mars": 3389.5,
-    "Jupiter": 69911,
-    "Saturn": 58232,
-    "Uranus": 25362,
-    "Neptune": 24622
+#include <iostream>
+#include <string>
+#include <map>
+#include <limits> // для numeric_limits
+
+
+
+enum class Planet {
+    Mercury,
+    Venus,
+    Earth,
+    Mars,
+    Jupiter,
+    Saturn,
+    Uranus,
+    Neptune
+};
+
+
+int main() {
+    
+    
+    std::map<std::string, double> planet_radii = {
+        {"Mercury", 2439.7},
+        {"Venus", 6051.8},
+        {"Earth", 6371.0},
+        {"Mars", 3389.5},
+        {"Jupiter", 69911},
+        {"Saturn", 58232},
+        {"Uranus", 25362},
+        {"Neptune", 24622}
+    };
+
+    std::string planet_name;
+    while (true) {
+        std::cout << "Введите название планеты (или 'выход' для завершения): ";
+        std::cin >> planet_name;
+
+       
+        for (char& c : planet_name) {
+            c = tolower(c);
+        }
+
+
+        if (planet_name == "выход") {
+            break;
+        }
+
+        if (planet_radii.count(planet_name)) {
+            std::cout << "Радиус планеты " << planet_name << ": " << planet_radii[planet_name] << " км" << std::endl;
+        } else {
+            std::cout << "Планета '" << planet_name << "' не найдена." << std::endl;
+        }
+        
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    return 0;
 }
 
-while True:
-    planet_name = input("Введите название планеты (или 'выход' для завершения): ").capitalize()
 
-    if planet_name == "Выход":
-        break
-
-    if planet_name in planets:
-        radius = planets[planet_name]
-        print(f"Радиус планеты {planet_name}: {radius} км")
-    else:
-        print(f"Планета '{planet_name}' не найдена в списке.")
 
