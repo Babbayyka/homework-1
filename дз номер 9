@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <stdexcept>
+
+enum class Device {
+  TV,
+  Computer,
+  Light,
+};
+
+void controlDevice(const std::string& command, Device device) {
+  if (command == "включение") {
+    std::cout << "Включение устройства: " << static_cast<int>(device) << std::endl;
+    
+  } else if (command == "выключение") {
+    std::cout << "Выключение устройства: " << static_cast<int>(device) << std::endl;
+    
+  } else {
+    throw std::invalid_argument("Неверная команда.");
+  }
+}
+
+int main() {
+  try {
+    controlDevice("включение", Device::TV);
+    controlDevice("выключение", Device::Computer);
+    controlDevice("перезагрузка", Device::Light); 
+  } catch (const std::invalid_argument& e) {
+    std::cerr << "Ошибка: " << e.what() << std::endl;
+  }
+  return 0;
+}
+
