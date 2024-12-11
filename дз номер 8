@@ -1,0 +1,23 @@
+planets = {
+    "Mercury": 2439.7,
+    "Venus": 6051.8,
+    "Earth": 6371.0,
+    "Mars": 3389.5,
+    "Jupiter": 69911,
+    "Saturn": 58232,
+    "Uranus": 25362,
+    "Neptune": 24622
+}
+
+while True:
+    planet_name = input("Введите название планеты (или 'выход' для завершения): ").capitalize()
+
+    if planet_name == "Выход":
+        break
+
+    if planet_name in planets:
+        radius = planets[planet_name]
+        print(f"Радиус планеты {planet_name}: {radius} км")
+    else:
+        print(f"Планета '{planet_name}' не найдена в списке.")
+
