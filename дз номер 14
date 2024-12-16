@@ -1,49 +1,57 @@
-enum TransportMode {
-  Car,
-  Bus,
-  Bicycle,
-  Walking
-}
+#include <iostream>
+#include <stdexcept>
 
-function calculateTravelTime(mode: TransportMode, distance: number): number {
-  let speed: number;
+enum class TransportMode { Car, Bus, Bicycle, Walking };
 
+double calculateTravelTime(TransportMode mode, double distance) {
+  
+  if (distance < 0) {
+    throw std::invalid_argument("Distance cannot be negative");
+  }
+
+  double speed;
   switch (mode) {
-    case TransportMode.Car:
-      speed = 60;
+    case TransportMode::Car:
+      speed = 60.0;
       break;
-    case TransportMode.Bus:
-      speed = 40;
+    case TransportMode::Bus:
+      speed = 40.0;
       break;
-    case TransportMode.Bicycle:
-      speed = 20;
+    case TransportMode::Bicycle:
+      speed = 20.0;
       break;
-    case TransportMode.Walking:
-      speed = 5;
+    case TransportMode::Walking:
+      speed = 5.0;
       break;
     default:
-      throw new Error("Unknown transport mode");
+      throw std::invalid_argument("Unknown transport mode");
   }
 
   
-  const speedInMinutes = speed / 60;
+  if (speed == 0.0) {
+    throw std::runtime_error("Speed cannot be zero");
+  }
 
   
-  const travelTime = distance / speedInMinutes;
+  double timeInHours = distance / speed;
 
-  return travelTime;
+  
+  return timeInHours * 60.0;
 }
 
+int main() {
+  try {
+    std::cout << "Время в пути на машине на 120 км: " << calculateTravelTime(TransportMode::Car, 120.0) << " мин" << std::endl;
+    std::cout << "Время в пути на автобусе на 50 км: " << calculateTravelTime(TransportMode::Bus, 50.0) << " мин" << std::endl;
+    std::cout << "Время в пути на велосипеде на 10 км: " << calculateTravelTime(TransportMode::Bicycle, 10.0) << " мин" << std::endl;
+    std::cout << "Время в пути пешком на 2.5 км: " << calculateTravelTime(TransportMode::Walking, 2.5) << " мин" << std::endl;
+    
+    std::cout << "Время в пути на машине на -120 км: " << calculateTravelTime(TransportMode::Car, -120.0) << " мин" << std::endl;
+  } catch (const std::invalid_argument& e) {
+    std::cerr << "Ошибка: " << e.what() << std::endl;
+  } catch (const std::runtime_error& e) {
+    std::cerr << "Ошибка выполнения: " << e.what() << std::endl;
+  }
 
-
-console.log(`Время в пути на машине на 120 км: ${calculateTravelTime(TransportMode.Car, 120)} мин`);
-console.log(`Время в пути на автобусе на 50 км: ${calculateTravelTime(TransportMode.Bus, 50)} мин`);
-console.log(`Время в пути на велосипеде на 10 км: ${calculateTravelTime(TransportMode.Bicycle, 10)} мин`);
-console.log(`Время в пути пешком на 2.5 км: ${calculateTravelTime(TransportMode.Walking, 2.5)} мин`);
-
-
-try{
-  console.log(`Время в пути на неизвестном транспорте на 10 км: ${calculateTravelTime(10 as TransportMode, 10)} мин`);
-} catch (error){
-  console.error(error);
+  return 0;
 }
