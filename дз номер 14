@@ -1,1 +1,49 @@
+enum TransportMode {
+  Car,
+  Bus,
+  Bicycle,
+  Walking
+}
 
+function calculateTravelTime(mode: TransportMode, distance: number): number {
+  let speed: number;
+
+  switch (mode) {
+    case TransportMode.Car:
+      speed = 60;
+      break;
+    case TransportMode.Bus:
+      speed = 40;
+      break;
+    case TransportMode.Bicycle:
+      speed = 20;
+      break;
+    case TransportMode.Walking:
+      speed = 5;
+      break;
+    default:
+      throw new Error("Unknown transport mode");
+  }
+
+  
+  const speedInMinutes = speed / 60;
+
+  
+  const travelTime = distance / speedInMinutes;
+
+  return travelTime;
+}
+
+
+
+console.log(`Время в пути на машине на 120 км: ${calculateTravelTime(TransportMode.Car, 120)} мин`);
+console.log(`Время в пути на автобусе на 50 км: ${calculateTravelTime(TransportMode.Bus, 50)} мин`);
+console.log(`Время в пути на велосипеде на 10 км: ${calculateTravelTime(TransportMode.Bicycle, 10)} мин`);
+console.log(`Время в пути пешком на 2.5 км: ${calculateTravelTime(TransportMode.Walking, 2.5)} мин`);
+
+
+try{
+  console.log(`Время в пути на неизвестном транспорте на 10 км: ${calculateTravelTime(10 as TransportMode, 10)} мин`);
+} catch (error){
+  console.error(error);
+}
