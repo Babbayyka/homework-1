@@ -1,40 +1,74 @@
+#include <iostream>
+#include <cmath>
+#include <limits> 
+
+using namespace std;
+
 int main() {
-	double num = 0;
-    double num1 = 0;
-    char num2 = ' ';
-    
-    cout << "Введите число" << endl;
+    double num1, num2;
+    char operation;
+    bool exit = false;
 
-    cin >> num >> num2 >> num1;
-    while ((true))
-    {
-        switch (num2)
-        {
-        case '+':
-            cout << "Ответ: " << num + num1;
-            break;
+menu:
 
-        case '-':
-            cout << "Ответ: " << num - num1;
-            break;
+    cout << "Выберите операцию:" << endl;
+    cout << " (+)" << endl;
+    cout << " (-)" << endl;
+    cout << " (*)" << endl;
+    cout << " (/)" << endl;
+    cout << " (^)" << endl;
+    cout << " (E)" << endl;
+    cout << "Введите номер операции: ";
+    cin >> operation;
 
-        case '/':
-            cout << "Ответ: " << num / num1;
-            break;
 
-        case '*':
-            cout << "Ответ: " << num * num1;
-            break;
-
-        case '^':
-            cout << "Ответ: " << pow(num, num1);
-            break;
-
-        default:
-            cout << "Erorr" << endl;
+    switch (operation) {
+        case '+': {
+            cout << "Введите два числа: ";
+            cin >> num1 >> num2;
+            cout << "Результат: " << num1 + num2 << endl;
+            goto menu; 
         }
-        cout << endl;
-        system("pause");
-}
-return 0;
+        case '-': {
+            cout << "Введите два числа: ";
+            cin >> num1 >> num2;
+            cout << "Результат: " << num1 - num2 << endl;
+            goto menu;
+        }
+        case '*': {
+            cout << "Введите два числа: ";
+            cin >> num1 >> num2;
+            cout << "Результат: " << num1 * num2 << endl;
+            goto menu;
+        }
+        case '/': {
+            cout << "Введите два числа: ";
+            cin >> num1 >> num2;
+            if (num2 == 0) {
+                cout << "Ошибка: деление на ноль!" << endl;
+            } else {
+                cout << "Результат: " << num1 / num2 << endl;
+            }
+            goto menu;
+        }
+        case '^': {
+            cout << "Введите основание и показатель степени: ";
+            cin >> num1 >> num2;
+            cout << "Результат: " << pow(num1, num2) << endl;
+            goto menu;
+        }
+        case 'E': case 'e': {
+            exit = true;
+        }
+        break; 
+        default: {
+            cout << "Ошибка: Неверная операция!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            goto menu;
+        }
+    }
+
+
+    return 0;
 }
