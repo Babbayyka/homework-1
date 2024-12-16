@@ -1,33 +1,44 @@
 #include <iostream>
-#include <string>
-#include <stdexcept>
+#include <cmath>
+#include <limits>
 
-enum class Device {
-  TV,
-  Computer,
-  Light,
+using namespace std;
+
+
+struct Point {
+    double x;
+    double y;
 };
 
-void controlDevice(const std::string& command, Device device) {
-  if (command == "включение") {
-    std::cout << "Включение устройства: " << static_cast<int>(device) << std::endl;
-    
-  } else if (command == "выключение") {
-    std::cout << "Выключение устройства: " << static_cast<int>(device) << std::endl;
-    
-  } else {
-    throw std::invalid_argument("Неверная команда.");
-  }
+
+double calculateDistance(Point p1, Point p2) {
+    return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
 }
 
 int main() {
-  try {
-    controlDevice("включение", Device::TV);
-    controlDevice("выключение", Device::Computer);
-    controlDevice("перезагрузка", Device::Light); 
-  } catch (const std::invalid_argument& e) {
-    std::cerr << "Ошибка: " << e.what() << std::endl;
-  }
-  return 0;
+    Point p1, p2;
+
+    cout << "Введите координаты первой точки (x y): ";
+    if (!(cin >> p1.x >> p1.y)) {
+        cout << "Ошибка ввода координат." << endl;
+        cin.clear(); // очищаем флаги ошибок
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        return 1;
+    }
+
+    cout << "Введите координаты второй точки (x y): ";
+    if (!(cin >> p2.x >> p2.y)) {
+        cout << "Ошибка ввода координат." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return 1;
+    }
+
+    double distance = calculateDistance(p1, p2);
+    cout << "Расстояние между точками: " << distance << endl;
+
+    return 0;
 }
+
+
 
