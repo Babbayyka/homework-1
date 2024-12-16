@@ -1,8 +1,46 @@
+#include <iostream>
+
+using namespace std;
+
 int main() {
-    int num[4][3] = {{1,2,3},{4,5,6,},{7,8,9},{10,11,12}}; 
-int summa = 0; 
-for (int i = 0; i < 4; i++) 
-for (int j = 0; j < 3; j++) 
-summa += num[i][j]; 
-cout << " Summa = " << summa; 
+    int currentFloor = 1; 
+    int targetFloor;
+
+menu: 
+    cout << "\nЛифт находится на " << currentFloor << " этаже." << endl;
+    cout << "Выберите этаж (1-5): ";
+    cin >> targetFloor;
+
+    if (cin.fail() || targetFloor < 1 || targetFloor > 5) {
+        cout << "Ошибка! Неверный номер этажа." << endl;
+        cin.clear(); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        goto menu;
+    }
+
+    if (targetFloor == currentFloor) {
+        cout << "Лифт уже находится на этом этаже." << endl;
+        goto menu;
+    }
+
+    cout << "Лифт едет на " << targetFloor << " этаж..." << endl;
+
+
+    if (targetFloor > currentFloor) {
+        for (int i = currentFloor + 1; i <= targetFloor; ++i) {
+            cout << "Лифт на " << i << " этаже." << endl;
+        }
+    } else {
+        for (int i = currentFloor - 1; i >= targetFloor; --i) {
+            cout << "Лифт на " << i << " этаже." << endl;
+        }
+    }
+
+    currentFloor = targetFloor;
+    cout << "Лифт прибыл на " << currentFloor << " этаж." << endl;
+    goto menu;
+
+
+    return 0;
 }
+
