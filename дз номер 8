@@ -1,59 +1,90 @@
 #include <iostream>
+#include <vector>
 #include <string>
-#include <map>
-#include <limits> // для numeric_limits
+#include <limits> // для проверки ввода
 
 
+using namespace std;
 
-enum class Planet {
-    Mercury,
-    Venus,
-    Earth,
-    Mars,
-    Jupiter,
-    Saturn,
-    Uranus,
-    Neptune
+// Структура Hero
+struct Hero {
+    string name;
+    int level;
+    int health;
+    int attack;
 };
 
 
-int main() {
-    
-    
-    std::map<std::string, double> planet_radii = {
-        {"Mercury", 2439.7},
-        {"Venus", 6051.8},
-        {"Earth", 6371.0},
-        {"Mars", 3389.5},
-        {"Jupiter", 69911},
-        {"Saturn", 58232},
-        {"Uranus", 25362},
-        {"Neptune", 24622}
-    };
+void printHeroInfo(const Hero& hero) {
+    cout << "Имя: " << hero.name << endl;
+    cout << "Уровень: " << hero.level << endl;
+    cout << "Здоровье: " << hero.health << endl;
+    cout << "Атака: " << hero.attack << endl;
+}
 
-    std::string planet_name;
-    while (true) {
-        std::cout << "Введите название планеты (или 'выход' для завершения): ";
-        std::cin >> planet_name;
+
+void battle(Hero& hero1, Hero& hero2) {
+    cout << "\nБой начался! " << hero1.name << " против " << hero2.name << endl;
+
+    while (hero1.health > 0 && hero2.health > 0) {
+        hero2.health -= hero1.attack;
+        cout << hero1.name << " атаковал " << hero2.name << ". Здоровье " << hero2.name << ": " << max(0, hero2.health) << endl; // max(0, ...) 
+
+        if (hero2.health <= 0) break;
+
+        hero1.health -= hero2.attack;
+        cout << hero2.name << " атаковал " << hero1.name << ". Здоровье " << hero1.name << ": " << max(0, hero1.health) << endl;
+
+    }
+
+    cout << "\nБой окончен!" << endl;
+    if (hero1.health <= 0 && hero2.health <=0){
+        cout << "Ничья!" << endl;
+    } else if (hero1.health <= 0) {
+        cout << hero2.name << " победил!" << endl;
+    } else {
+        cout << hero1.name << " победил!" << endl;
+    }
+}
+
+
+int main() {
+    int numHeroes;
+
+    cout << "Введите количество героев: ";
+    cin >> numHeroes;
+
+    if (cin.fail() || numHeroes <= 0) {
+        cout << "Ошибка! Количество героев должно быть положительным числом." << endl;
+        return 1;
+    }
+
+    vector<Hero> heroes(numHeroes);
+
+    for (int i = 0; i < numHeroes; ++i) {
+        cout << "\nВведите информацию о герое " << i + 1 << ":" << endl;
+        cout << "Имя: ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, heroes[i].name);
+        cout << "Уровень: ";
+        cin >> heroes[i].level;
+        cout << "Здоровье: ";
+        cin >> heroes[i].health;
+        cout << "Атака: ";
+        cin >> heroes[i].attack;
 
        
-        for (char& c : planet_name) {
-            c = tolower(c);
+        if (cin.fail() || heroes[i].level <=0 || heroes[i].health <=0 || heroes[i].attack <=0){
+            cout << "Ошибка ввода! Значения должны быть положительными числами." << endl;
+            return 1;
         }
+    }
 
 
-        if (planet_name == "выход") {
-            break;
-        }
-
-        if (planet_radii.count(planet_name)) {
-            std::cout << "Радиус планеты " << planet_name << ": " << planet_radii[planet_name] << " км" << std::endl;
-        } else {
-            std::cout << "Планета '" << planet_name << "' не найдена." << std::endl;
-        }
-        
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    if (numHeroes >= 2) {
+      battle(heroes[0], heroes[1]); 
+    } else {
+      cout << "Для боя нужно минимум 2 героя." << endl;
     }
 
     return 0;
