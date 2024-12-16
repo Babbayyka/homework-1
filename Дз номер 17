@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+
+enum class Device { TV, Radio, Lamp };
+
+enum class Command { On, Off };
+
+void controlDevice(Device device, Command command) {
+    std::string deviceName;
+    std::string commandName;
+
+    switch (device) {
+        case Device::TV:
+            deviceName = "телевизор";
+            break;
+        case Device::Radio:
+            deviceName = "радио";
+            break;
+        case Device::Lamp:
+            deviceName = "лампа";
+            break;
+    }
+
+    switch (command) {
+        case Command::On:
+            commandName = "включен";
+            break;
+        case Command::Off:
+            commandName = "выключен";
+            break;
+    }
+
+    std::cout << deviceName << " " << commandName << std::endl;
+}
+
+int main() {
+    controlDevice(Device::TV, Command::On);      
+    controlDevice(Device::Radio, Command::Off); 
+    controlDevice(Device::Lamp, Command::On);    
+
+    
+    try {
+      controlDevice(static_cast<Device>(10), Command::On);
+    } catch (const std::exception& e){
+        std::cerr << "Ошибка: Неизвестное устройство" << std::endl;
+    }
+
+
+    return 0;
+}
