@@ -1,0 +1,91 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm> // для функции find
+
+using namespace std;
+
+
+struct Book {
+    string title;
+    string author;
+    string genre;
+    bool isAvailable;
+};
+
+
+void addBook(vector<Book>& books) {
+    Book newBook;
+    cout << "Введите название книги: ";
+    getline(cin >> ws, newBook.title); 
+    cout << "Введите автора книги: ";
+    getline(cin >> ws, newBook.author);
+    cout << "Введите жанр книги: ";
+    getline(cin >> ws, newBook.genre);
+    newBook.isAvailable = true; 
+    books.push_back(newBook);
+    cout << "Книга добавлена!" << endl;
+}
+
+
+void searchBook(const vector<Book>& books) {
+    string searchTitle;
+    cout << "Введите название книги для поиска: ";
+    getline(cin >> ws, searchTitle);
+
+    auto it = find_if(books.begin(), books.end(),
+                      [&](const Book& book) { return book.title == searchTitle; });
+
+    if (it != books.end()) {
+        cout << "\nНайденная книга:" << endl;
+        cout << "Название: " << it->title << endl;
+        cout << "Автор: " << it->author << endl;
+        cout << "Жанр: " << it->genre << endl;
+        cout << "Доступность: " << (it->isAvailable ? "Да" : "Нет") << endl;
+    } else {
+        cout << "Книга не найдена." << endl;
+    }
+}
+
+
+
+void printAvailableBooks(const vector<Book>& books) {
+    cout << "\nСписок доступных книг:" << endl;
+    bool found = false; 
+    for (const auto& book : books) {
+        if (book.isAvailable) {
+            cout << "Название: " << book.title << ", Автор: " << book.author << ", Жанр: " << book.genre << endl;
+            found = true;
+        }
+    }
+    if (!found) {
+        cout << "Доступных книг нет." << endl;
+    }
+}
+
+int main() {
+    vector<Book> library;
+    int choice;
+
+    do {
+        cout << "\nМеню:" << endl;
+        cout << "1. Добавить книгу" << endl;
+        cout << "2. Найти книгу" << endl;
+        cout << "3. Вывести список доступных книг" << endl;
+        cout << "4. Выход" << endl;
+        cout << "Выберите действие: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: addBook(library); break;
+            case 2: searchBook(library); break;
+            case 3: printAvailableBooks(library); break;
+            case 4: cout << "До свидания!" << endl; break;
+            default: cout << "Неверный выбор!" << endl;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+    } while (choice != 4);
+
+    return 0;
+}
+
