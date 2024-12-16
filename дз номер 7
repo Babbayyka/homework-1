@@ -1,23 +1,56 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
 int main() {
-	int day;
-    cout << "Enter the day value: " << endl;
-    cin >> day;
-    switch (day)
-    {
-        case 1: cout << "Monday" << endl;
-        break;
-        case 2: cout << "Tuesday" << endl;
-        break;
-        case 3: cout << "Wednesday" << endl;
-        break;
-        case 4: cout << "Thursday" << endl;
-        break;
-        case 5: cout << "Friday" << endl;
-        break;
-        case 6: cout << "Saturday" << endl;
-        break;
-        case 7: cout << "Sunday" << endl;
-        break;
-        default: cout << "Please enter a valid input!!" << endl;
+    int rows1, cols1, rows2, cols2;
+
+    cout << "Введите количество строк и столбцов первой матрицы: ";
+    cin >> rows1 >> cols1;
+    vector<vector<int>> matrix1(rows1, vector<int>(cols1));
+
+    cout << "Введите элементы первой матрицы:" << endl;
+    for (int i = 0; i < rows1; ++i) {
+        for (int j = 0; j < cols1; ++j) {
+            cin >> matrix1[i][j];
+        }
     }
+
+    cout << "Введите количество строк и столбцов второй матрицы: ";
+    cin >> rows2 >> cols2;
+    vector<vector<int>> matrix2(rows2, vector<int>(cols2));
+
+    cout << "Введите элементы второй матрицы:" << endl;
+    for (int i = 0; i < rows2; ++i) {
+        for (int j = 0; j < cols2; ++j) {
+            cin >> matrix2[i][j];
+        }
+    }
+
+    if (cols1 != rows2) {
+        cout << "Ошибка: Количество столбцов первой матрицы не равно количеству строк второй матрицы." << endl;
+        return 1; 
+    }
+
+    vector<vector<int>> resultMatrix(rows1, vector<int>(cols2, 0)); 
+
+    for (int i = 0; i < rows1; ++i) {
+        for (int j = 0; j < cols2; ++j) {
+            for (int k = 0; k < cols1; ++k) {
+                resultMatrix[i][j] += matrix1[i][k] * matrix2[k][j];
+            }
+        }
+    }
+
+    cout << "Результат перемножения матриц:" << endl;
+    for (int i = 0; i < rows1; ++i) {
+        for (int j = 0; j < cols2; ++j) {
+            cout << resultMatrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
 }
+
