@@ -1,29 +1,36 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
 int main() {
-    int a[5][5]=
-    {
-        {2,5,6,1,4},
-        {8,9,1,3,5},
-        {1,2,3,4,5},
-        {1,0,1,0,1},
-        {1,2,6,9,3}
-    };
-    int b[5][5]=
-    {
-        {7,2,4,1,4},
-        {9,4,6,2,1},
-        {1,1,1,1,1},
-        {2,2,2,2,2},
-        {7,3,2,4,1}
-    };
-    int sum[5][5];
-    for (int i=0; i<5; i++)
-    {
-        for (int j=0; j<5; j++)
-        {
-            sum[i][j]=a[i][j]+b[i][j];
-            std::cout <<std::setw(3) <<sum[i][j];
+    int n;
+    cout << "Введите размер квадратной матрицы: ";
+    cin >> n;
+
+    vector<vector<int>> matrix(n, vector<int>(n));
+    cout << "Введите элементы матрицы:" << endl;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> matrix[i][j];
         }
-        std::cout <<'\n';
     }
+
+    vector<vector<int>> rotatedMatrix(n, vector<int>(n));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            rotatedMatrix[j][n - 1 - i] = matrix[i][j];
+        }
+    }
+
+    cout << "Повернутая матрица:" << endl;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cout << rotatedMatrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+
     return 0;
 }
+
