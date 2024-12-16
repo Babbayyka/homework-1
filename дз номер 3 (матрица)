@@ -1,10 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <limits> // для numeric_limits
+
+using namespace std;
+
 int main() {
-    int num[3][2] = {{1,2,},{3,4,},{5,6}};
-    int max = 0;
-    for (int i = 0; i < 3;i++) {
-        for (int j = 0; j < 2; j++) {
-            if ( num[i][j]> max)
-            max = num[i][j];
+    int rows, cols;
+
+    cout << "Введите количество строк: ";
+    cin >> rows;
+    cout << "Введите количество столбцов: ";
+    cin >> cols;
+
+    vector<vector<int>> matrix(rows, vector<int>(cols));
+
+    cout << "Введите элементы матрицы:" << endl;
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cin >> matrix[i][j];
         }
     }
+
+    int maxElement = numeric_limits<int>::min();
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (matrix[i][j] > maxElement) {
+                maxElement = matrix[i][j];
+            }
+        }
+    }
+
+    cout << "Максимальный элемент: " << maxElement << endl;
+
+    return 0;
 }
+
