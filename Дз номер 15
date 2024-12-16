@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <map>
+#include <limits> // for numeric_limits
+
+enum class Planet { Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune };
+
+
+std::map<Planet, double> planetRadii = {
+    {Planet::Mercury, 2439.7},
+    {Planet::Venus, 6051.8},
+    {Planet::Earth, 6371.0},
+    {Planet::Mars, 3389.5},
+    {Planet::Jupiter, 69911},
+    {Planet::Saturn, 58232},
+    {Planet::Uranus, 25362},
+    {Planet::Neptune, 24622}
+};
+
+
+Planet getPlanetFromString(const std::string& planetName) {
+    
+    std::string lowerPlanetName = planetName;
+    for (char &c : lowerPlanetName) {
+        c = std::tolower(c);
+    }
+
+
+    if (lowerPlanetName == "mercury") return Planet::Mercury;
+    if (lowerPlanetName == "venus") return Planet::Venus;
+    if (lowerPlanetName == "earth") return Planet::Earth;
+    if (lowerPlanetName == "mars") return Planet::Mars;
+    if (lowerPlanetName == "jupiter") return Planet::Jupiter;
+    if (lowerPlanetName == "saturn") return Planet::Saturn;
+    if (lowerPlanetName == "uranus") return Planet::Uranus;
+    if (lowerPlanetName == "neptune") return Planet::Neptune;
+
+    throw std::invalid_argument("Unknown planet name");
+}
+
+
+int main() {
+    std::string planetName;
+    std::cout << "Введите название планеты (на английском): ";
+    std::cin >> planetName;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищаем буфер потока ввода
+
+
+    try {
+        Planet planet = getPlanetFromString(planetName);
+        double radius = planetRadii.at(planet); 
+        std::cout << "Радиус планеты " << planetName << ": " << radius << " км" << std::endl;
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Ошибка: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
