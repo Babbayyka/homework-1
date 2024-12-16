@@ -1,0 +1,57 @@
+#include <iostream>
+#include <limits> // для обработки ошибок ввода
+
+
+using namespace std;
+
+
+enum class Day {
+    ПН, ВТ, СР, ЧТ, ПТ, СБ, ВС
+};
+
+
+Day getDay(int dayNumber) {
+    if (dayNumber < 1 || dayNumber > 7) {
+        throw invalid_argument("Некорректный номер дня недели.");
+    }
+    return static_cast<Day>(dayNumber - 1);
+}
+
+
+string getDayName(Day day) {
+    switch (day) {
+        case Day::ПН: return "Понедельник";
+        case Day::ВТ: return "Вторник";
+        case Day::СР: return "Среда";
+        case Day::ЧТ: return "Четверг";
+        case Day::ПТ: return "Пятница";
+        case Day::СБ: return "Суббота";
+        case Day::ВС: return "Воскресенье";
+    }
+}
+
+int main() {
+    int dayNumber;
+
+    cout << "Введите номер дня недели (1-7): ";
+    cin >> dayNumber;
+
+   \
+    if (cin.fail()) {
+        cout << "Ошибка! Неверный ввод." << endl;
+        cin.clear(); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return 1;
+    }
+
+    try {
+        Day day = getDay(dayNumber);
+        cout << "Название дня недели: " << getDayName(day) << endl;
+    } catch (const invalid_argument& e) {
+        cerr << "Ошибка: " << e.what() << endl;
+        return 1; 
+    }
+
+    return 0;
+}
+
